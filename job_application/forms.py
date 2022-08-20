@@ -1,12 +1,41 @@
 from dataclasses import field, fields
 from django.core.exceptions import ValidationError
-from django.forms import RadioSelect
+from django.forms import RadioSelect, CheckboxSelectMultiple, FileInput
 from multipage_form.forms import MultipageForm, ChildForm
 from .models import JobApplication
 
+from datetime import date
+from django import forms
+
+# Class to get the date
+class DateSelectorWidget(forms.MultiWidget):
+    def __init__(self, attrs=None):
+        days = [(day, day) for day in range(1, 32)]
+        months = [(month, month) for month in range(1, 13)]
+        years = [(year, year) for year in reversed(range(1950, 2023))]
+        widgets = [
+            forms.Select(attrs=attrs, choices=days),
+            forms.Select(attrs=attrs, choices=months),
+            forms.Select(attrs=attrs, choices=years),
+        ]
+        super().__init__(widgets, attrs)
+
+    def decompress(self, value):
+        if isinstance(value, date):
+            return [value.day, value.month, value.year]
+        elif isinstance(value, str):
+            year, month, day = value.split('-')
+            return [day, month, year]
+        return [None, None, None]
+
+    def value_from_datadict(self, data, files, name):
+        day, month, year = super().value_from_datadict(data, files, name)
+        # DateField expects a single string that it can parse into a date.
+        return f'{day}/{month}/{year}'
+
+
 class JobApplicationForm(MultipageForm):
     model = JobApplication
-    #starting_form = "Stage1Form"
     starting_form = "Stage1Form"
         
     class Stage1Form(ChildForm):
@@ -23,7 +52,8 @@ class JobApplicationForm(MultipageForm):
             ('Barbalha', 'Barbalha'),
             ('Miami', 'Miami'),
             ('São Paulo', 'São Paulo'),
-            ])
+            ]),
+          'data_nascimento': DateSelectorWidget()
         }
 
     
@@ -78,6 +108,7 @@ class JobApplicationForm(MultipageForm):
 
     class Stage6Form(ChildForm):
       display_name = 'Stage6'
+      required_fields = '__all__'
 
       class Meta:
         fields = ['produtos_e_tecnologias']
@@ -102,10 +133,10 @@ class JobApplicationForm(MultipageForm):
       class Meta:
         fields = ['backend']
         widgets = {
-          'backend': RadioSelect(choices=[
+          'backend': CheckboxSelectMultiple(choices=[
             ('php', "PHP"), 
             ('python', "Python"),
-            ('django', 'DJANGO'),
+            ('django', 'Django'),
             ('node', 'Node.js'),
             ('java', 'Java'),
             ('go', 'GO'),
@@ -297,10 +328,21 @@ class JobApplicationForm(MultipageForm):
 
     class Stage14Form(ChildForm):
       display_name = 'Stage 14'
-      next_form_class = 'LastStageForm'
+      next_form_class = 'Stage15Form'
       
       class Meta:
         fields = ['importancia']
+
+
+    class Stage15Form(ChildForm):
+      display_name = 'Stage 15'
+      next_form_class = 'LastStageForm'
+
+      class Meta:
+        fields = ['curriculo']
+        widgets = {
+          'curriculo': FileInput()
+        }
 
 
     class LastStageForm(ChildForm):

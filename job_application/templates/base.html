@@ -44,7 +44,7 @@
           {{ form.display_name }}
         </div>
         {% endblock %}
-        <form id="job-application-form" method="post" action=".">
+        <form id="job-application-form" method="post" action="." enctype="multipart/form-data">
           {% csrf_token %}
           {% block form %}
           {% endblock %}

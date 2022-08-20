@@ -1,12 +1,18 @@
+import uuid
 from django.db import models
 from multipage_form.models import MultipageModel
 
 from django.utils import timezone
 
+
+def get_file_path(_instance, filename):
+  ext = filename.split('.')[-1]
+  filename = f'{uuid.uuid4()}.{ext}'
+  return filename
+
+
 class JobApplication(MultipageModel):
   criacao = models.DateTimeField(default=timezone.now)
-  
-  # stage test
 
   # stage 1 fields
   nome_completo = models.CharField('Nome Completo', max_length=100, blank=True)
@@ -37,50 +43,51 @@ class JobApplication(MultipageModel):
   # stage 6 fields
   produtos_e_tecnologias = models.CharField('Produtos e Tecnologias', max_length=30, blank=True)
   # stage 6b fields
-  backend = models.CharField('Backend', max_length=30, blank=True)
-  frontend = models.CharField('Frontend', max_length=30, blank=True)
-
-
+  backend = models.CharField('Backend', max_length=100, blank=True)
+  frontend = models.CharField('Frontend', max_length=100, blank=True)
 
   # stage 7 fields
   wordpress = models.BooleanField('WordPress', default=False)
   elementor = models.BooleanField('Elementor', default=False)
   nocode_lowcode = models.BooleanField('Nocode / Low Code', default=False)
-  # stage 6b fields
+  # stage 7b fields
   nocode_lowcode_tecnologias = models.CharField('Tecnologias Nocode / Low Code', max_length=100, blank=True)
   
-  # stage 7 fields
+  # stage 8 fields
   nivel_profissional = models.CharField('Nível Profissional', max_length=30, blank=True)
   tempo_trabalhado = models.CharField('Tempo Trabalhado', max_length=100, blank=True)
 
-  # stage 8 fields
+  # stage 9 fields
   exame = models.BooleanField('Exame?', default=False) # Aceita fazer exame?
   ingles = models.BooleanField('Ingles?', default=False) # Possui conhecimento em Inglês?
-  # stage 8b fields
+  # stage 9b fields
   nivel_ingles = models.CharField('Nível de Inglês', max_length=30, blank=True)
 
-  # stage 9 fields
+  # stage 10 fields
   modelo_contratacao = models.CharField('Modelo de Contratação', max_length=30, blank=True)
-  # stage 9b fields
+  # stage 10b fields
   possui_empresa = models.BooleanField('Você possui empresa aberta?', default=False)
 
-  # stage 10 fields
+  # stage 11 fields
   duvida = models.BooleanField('Dúvida?', default=False)
-  # stage 10b fields
+  # stage 11b fields
   qual_duvida = models.TextField('Qual a dúvida?', blank=True)
 
-  # stage 11 fields
+  # stage 12 fields
   sugestao = models.BooleanField('Sugestão?', default=False)
-  # stage 11b fields
+  # stage 12b fields
   qual_sugestao = models.TextField('Qual a sugestão?', blank=True)
 
-  # stage 12 fields
+  # stage 13 fields
   indicacao = models.BooleanField('Indicacao?', default=False)
-  # stage 12b fields
+  # stage 13b fields
   quem_indicou = models.CharField('Quem indicou?', max_length=100, blank=True)
 
-  # stage 13 fields
+  # stage 14 fields
   importancia = models.CharField('Qual a coisa mais importante da sua vida?', max_length=100, blank=True)
+
+  # stage 15 fields
+  curriculo = models.FileField('Currículo', upload_to=get_file_path, blank=True)
   
   # last stage
   tudo_pronto = models.BooleanField('Tudo pronto?', default=False)
