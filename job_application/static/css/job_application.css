@@ -1,0 +1,48 @@
+#intro {
+  margin: 10px 0px;
+}
+#form_name {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.twocol {
+  display: flex;
+  width: 100%;
+}
+.left {
+  flex-basis: 15%;
+  padding: 10px;
+  margin: 10px 10px 10px 0px;
+  border: 1px solid black;
+  background-color: lightgray;
+}
+ul.nav {
+  margin: 20px 0px;
+  padding: 0px;
+  list-style: none;
+}
+ul.nav li {
+  margin: 15px 0px;
+  display: block;
+  width: 100%;
+}
+ul.nav li a {
+  text-decoration: none;
+}
+.right {
+  flex-basis: 80%;
+  padding: 10px;
+  left: 18%;
+}
+.right p {
+  margin-top: 0px;
+}
+.right a.button {
+  font: bold 12px Arial;
+  text-decoration: none;
+  background-color: #eeeeee;
+  color: #333333;
+  padding: 3px 6px;
+  border: 1px solid black;
+  border-radius: 3px;
+}

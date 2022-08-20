@@ -1,0 +1,63 @@
+{% load multipage_form_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Job Application</title>
+  <link rel="stylesheet" href="{% static 'css/job_application.css' %}">
+  {{ form.media }}
+</head>
+
+<body>
+  {% block content %}
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+  <div id="main">
+    {% block intro %}
+    <div class="intro">
+      <h3>Thank you for your interest in MegaCorp. Please supply the following information.</h3>
+    </div>
+    {% endblock %}
+    <div class="twocol">
+      {% block leftnav %}
+      <div class="left">
+        COMPLETED SECTIONS
+        {% get_history as links %}
+        {% if links %}
+        {% for link in links %}
+        <ul class="nav">
+          <li>{{ link }}</li>
+        </ul>
+        {% endfor %}
+        {% endif %}
+      </div>
+      {% endblock %}
+      <div class="right">
+        {% block preform %}
+        <div id="form_name">
+          {{ form.display_name }}
+        </div>
+        {% endblock %}
+        <form id="job-application-form" method="post" action=".">
+          {% csrf_token %}
+          {% block form %}
+          {% endblock %}
+          <br>
+          {% if previous %}
+          <a class="button" href="?p={{ previous }}">Previous</a>
+          {% endif %}
+          <button type="submit">Next</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+</body>
+
+</html>

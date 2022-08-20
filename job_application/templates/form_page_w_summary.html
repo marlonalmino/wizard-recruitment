@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load multipage_form_tags %}
+{% block intro %}
+<div class="intro">
+  <h3>Please confirm that all information below is correct or make changes as necessary.</h3>
+</div>
+{% endblock %}
+{% block leftnav %}{% endblock %}
+{% block preform %}
+{% get_form_summary %}
+{% endblock %}
+{% block form %}
+{{ form.as_p }}
+{% endblock %}
