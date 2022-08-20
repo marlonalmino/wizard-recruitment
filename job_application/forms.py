@@ -40,7 +40,7 @@ class JobApplicationForm(MultipageForm):
         
     class Stage1Form(ChildForm):
       display_name = "Informações Pessoais"
-      #required_fields = "__all__"
+      required_fields = "__all__"
       next_form_class = 'Stage2Form'
 
       class Meta:
@@ -58,8 +58,7 @@ class JobApplicationForm(MultipageForm):
 
     
     class Stage2Form(ChildForm):
-      display_name = "Informações Adicionais"
-      # required_fields = "__all__"
+      display_name = "Sistemas de Trabalho"
       next_form_class = 'Stage3Form'
 
       class Meta:
@@ -72,7 +71,7 @@ class JobApplicationForm(MultipageForm):
 
     
     class Stage3Form(ChildForm):
-      display_name = "Suporte a Home Office"
+      display_name = "Dispositivos"
       next_form_class = 'Stage4Form'
 
       class Meta:
@@ -84,7 +83,7 @@ class JobApplicationForm(MultipageForm):
 
 
     class Stage4Form(ChildForm):
-      display_name = "Trabalho"
+      display_name = "Informações Profissionais"
       next_form_class = 'Stage5Form'
 
       class Meta:
@@ -97,6 +96,7 @@ class JobApplicationForm(MultipageForm):
 
     class Stage5Form(ChildForm):
       display_name = "Escolaridade"
+      required_fields = ['escola']
       next_form_class = 'Stage6Form'
 
       class Meta:
@@ -107,7 +107,7 @@ class JobApplicationForm(MultipageForm):
 
 
     class Stage6Form(ChildForm):
-      display_name = 'Stage6'
+      display_name = 'Área Desejada'
       required_fields = '__all__'
 
       class Meta:
@@ -127,8 +127,9 @@ class JobApplicationForm(MultipageForm):
 
 
     class Stage6bForm(ChildForm):
-      display_name = 'Stage 6b'
+      display_name = 'Tecnologias Back-end'
       next_form_class = 'Stage7Form'
+      required_fields = '__all__'
       
       class Meta:
         fields = ['backend']
@@ -147,21 +148,22 @@ class JobApplicationForm(MultipageForm):
 
 
     class Stage6cForm(ChildForm):
-      display_name = 'Stage 6c'
+      display_name = 'Tecnologias Front-end'
       next_form_class = 'Stage7Form'
+      required_fields = '__all__'
       
       class Meta:
         fields = ['frontend']
         widgets = {
-          'frontend': RadioSelect(choices=[
-            ('test', "test"), 
-            ('test', "test"), 
-            ('test', "test"), 
-            ('test', "test"), 
-            ('test', "test"), 
-            ('test', "test"), 
-            ('test', "test"), 
-            ('test', "test"), 
+          'frontend': CheckboxSelectMultiple(choices=[
+            ('javascript', "JavaScript"), 
+            ('react', "React"), 
+            ('react native', "React Native"), 
+            ('typescript', "TypeScript"), 
+            ('next.js', "Next.js"), 
+            ('vue.js', "Vue.js"), 
+            ('flutter', "Flutter"), 
+            ('figma', "Figma"), 
             ]),
         }
 
@@ -184,19 +186,40 @@ class JobApplicationForm(MultipageForm):
     
 
     class Stage7bForm(ChildForm):
-      display_name = "Tecnologias Adicionais"
+      display_name = "NOCODE / LOWCODE"
       next_form_class = 'Stage8Form'
+      required_fields = '__all__'
 
       class Meta:
         fields = ['nocode_lowcode_tecnologias']
     
 
     class Stage8Form(ChildForm):
-      display_name = "Job"
+      display_name = "Experiência Profissional"
       next_form_class = 'Stage9Form'
+      required_fields = '__all__'
 
       class Meta:
         fields = ['nivel_profissional', 'tempo_trabalhado']
+        widgets = {
+          'nivel_profissional': RadioSelect(choices=[
+            ('aprendiz', "Aprendiz"), 
+            ('júnior', "Júnior"),
+            ('pleno', 'Pleno'),
+            ('sênior', 'Sênior'),
+            ('especialista', 'Especialista'),
+            ('gestor', 'Gestor')
+            ]),
+          'tempo_trabalhado': RadioSelect(choices=[
+            ('nenhuma experiência', 'Nenhuma experiência em empresa'),
+            ('freelancer', 'Apenas trabalhei como freelancer'),
+            ('menos de um ano', 'Menos de um ano'),
+            ('até três anos', 'Até três anos'),
+            ('até cinco anos', 'Até cinco anos'),
+            ('até dez anos', 'Até dez anos'),
+            ('até vinte anos', 'Até vinte anos'),
+          ])
+        }
 
 
     class Stage9Form(ChildForm):
@@ -216,18 +239,25 @@ class JobApplicationForm(MultipageForm):
 
 
     class Stage9bForm(ChildForm):
-      display_name = 'Mais informações'
+      display_name = 'Inglês'
       next_form_class = 'Stage10Form'
 
       class Meta:
         fields = ['nivel_ingles']
+        widgets = {
+          'nivel_ingles': RadioSelect(choices=[
+            ('técnico', 'Técnico'),
+            ('google translator', 'Google Translator'),
+            ('me comunico com dificuldade', 'Consigo me comunicar com certa dificuldade'),
+            ('fluente', 'Pronto para viajar para Miami e voltar com um contrato assinado'),
+          ])
+        }
 
     
     class Stage10Form(ChildForm):
-      display_name = 'Stage 10'
-      #next_form_class = 'Stage10Form'
+      display_name = 'Modelo de Contratação'
+      required_fields = '__all__'
       
-
       class Meta:
         fields = ['modelo_contratacao']
         widgets = {
@@ -247,7 +277,7 @@ class JobApplicationForm(MultipageForm):
 
     
     class Stage10bForm(ChildForm):
-      display_name = 'Stage10bForm'
+      display_name = 'Pessoa Jurídica'
       next_form_class = 'Stage11Form'
 
       class Meta:
@@ -258,7 +288,7 @@ class JobApplicationForm(MultipageForm):
 
     
     class Stage11Form(ChildForm):
-      display_name = 'Stage 11'
+      display_name = 'Dúvidas'
       
       class Meta:
         fields = ['duvida']
@@ -273,15 +303,16 @@ class JobApplicationForm(MultipageForm):
 
     
     class Stage11bForm(ChildForm):
-      display_name = 'Stage 11b'
+      display_name = 'Dúvidas'
       next_form_class = 'Stage12Form'
+      required_fields = '__all__'
       
       class Meta:
         fields = ['qual_duvida']
 
 
     class Stage12Form(ChildForm):
-      display_name = 'Stage 12'
+      display_name = 'Sugestões'
       
       class Meta:
         fields = ['sugestao']
@@ -296,15 +327,16 @@ class JobApplicationForm(MultipageForm):
 
     
     class Stage12bForm(ChildForm):
-      display_name = 'Stage 12b'
+      display_name = 'Sugestões'
       next_form_class = 'Stage13Form'
+      required_fields = '__all__'
       
       class Meta:
         fields = ['qual_sugestao']
 
 
     class Stage13Form(ChildForm):
-      display_name = 'Stage 13'
+      display_name = 'Indicação'
       
       class Meta:
         fields = ['indicacao']
@@ -319,24 +351,27 @@ class JobApplicationForm(MultipageForm):
 
 
     class Stage13bForm(ChildForm):
-      display_name = 'Stage 13b'
+      display_name = 'Indicação'
       next_form_class = 'Stage14Form'
+      required_fields = '__all__'
 
       class Meta:
         fields = ['quem_indicou']
 
 
     class Stage14Form(ChildForm):
-      display_name = 'Stage 14'
+      display_name = 'Pense um pouco!'
       next_form_class = 'Stage15Form'
+      required_fields = '__all__'
       
       class Meta:
         fields = ['importancia']
 
 
     class Stage15Form(ChildForm):
-      display_name = 'Stage 15'
+      display_name = 'Currículo'
       next_form_class = 'LastStageForm'
+      required_fields = '__all__'
 
       class Meta:
         fields = ['curriculo']
