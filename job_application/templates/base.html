@@ -4,7 +4,7 @@
 <html lang="en">
 
 <head>
-  <title>Job Application</title>
+  <title>Candidatura de Trabalho</title>
   <link rel="stylesheet" href="{% static 'css/job_application.css' %}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
   {{ form.media }}
@@ -12,57 +12,57 @@
 
 <body>
   <div class="container mt-4">
-  {% block content %}
-  {% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-      {% endfor %}
-  </ul>
-  {% endif %}
-  <div id="main">
-    {% block intro %}
-    <div class="intro">
-      <h3>Obrigado pelo seu interesse na Wizard Recrutamentos. Por favor, forneça as seguintes informações.</h3>
-    </div>
-    {% endblock %}
-    <div class="twocol">
-      {% block leftnav %}
-      <div class="left rounded-3">
-        <h6>SEÇÕES COMPLETAS</h6>
-        {% get_history as links %}
-        {% if links %}
-        {% for link in links %}
-        <ul class="nav">
-          <li class="link-dark">{{ link }}</li>
-        </ul>
+    {% block content %}
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
         {% endfor %}
-        {% endif %}
+    </ul>
+    {% endif %}
+    <div id="main">
+      {% block intro %}
+      <div class="intro">
+        <h3>Obrigado pelo seu interesse na Wizard Recrutamentos. Por favor, forneça as seguintes informações.</h3>
       </div>
       {% endblock %}
-      <div class="right">
-        {% block preform %}
-        <div id="form_name">
-          <h4>{{ form.display_name }}</h4>
+      <div class="twocol">
+        {% block leftnav %}
+        <div class="left rounded-3">
+          <h6>SEÇÕES COMPLETAS</h6>
+          {% get_history as links %}
+          {% if links %}
+          {% for link in links %}
+          <ul class="nav">
+            <li class="link-dark">{{ link }}</li>
+          </ul>
+          {% endfor %}
+          {% endif %}
         </div>
         {% endblock %}
-        <form id="job-application-form" class="form-inline" method="post" action="." enctype="multipart/form-data">
+        <div class="right">
+          {% block preform %}
+          <div id="form_name">
+            <h4>{{ form.display_name }}</h4>
+          </div>
+          {% endblock %}
+          <form id="job-application-form" class="form-inline" method="post" action="." enctype="multipart/form-data">
             {% csrf_token %}
             {% block form %}
             {% endblock %}
             <br>
             {% if previous %}
-            <a class="btn btn-primary" href="?p={{ previous }}">Previous</a>
+            <a class="btn btn-primary" href="?p={{ previous }}">Anterior</a>
             {% endif %}
-            <button class="btn btn-primary" type="submit">Next</button>
+            <button class="btn btn-primary" type="submit">Próximo</button>
           </form>
+        </div>
       </div>
     </div>
-  </div>
-  {% endblock %}
+    {% endblock %}
   </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

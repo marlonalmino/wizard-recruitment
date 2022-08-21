@@ -2,8 +2,6 @@ from django.forms import RadioSelect, CheckboxSelectMultiple, FileInput, TextInp
 from multipage_form.forms import MultipageForm, ChildForm
 from .models import JobApplication
 
-from crispy_forms.helper import FormHelper
-
 from datetime import date
 from django import forms
 
