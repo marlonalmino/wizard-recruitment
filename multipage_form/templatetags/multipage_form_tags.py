@@ -17,6 +17,7 @@ def get_form_summary(context):
     form_history = context["form_history"]
     child_form_classes = context["child_forms"]
     instance = context["form"].instance
+    print(context['form'].instance)
     sections = []
     for f in form_history:
         child_form_class = child_form_classes[f["name"]]

@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'multipage_form',
-    'bootstrap4',
 
     'job_application',
 ]

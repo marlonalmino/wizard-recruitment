@@ -2,12 +2,18 @@
 <html lang="en">
 
 <head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
   <title>Thank you for your interest</title>
 </head>
 
 <body>
-  Congratulations. Your application has been added to the pile.<br>
-  Click <a href="{% url 'job_application:job_application' %}">here</a> to start a new application.
+  <div class="container mt-4 me-5">
+    Parabéns. Seu currículo foi adicionado à pilha.<br>
+    Clique <a href="{% url 'job_application:job_application' %}">aqui</a> para aplicar novamente.
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

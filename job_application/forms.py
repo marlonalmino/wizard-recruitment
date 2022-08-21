@@ -1,8 +1,8 @@
-from dataclasses import field, fields
-from django.core.exceptions import ValidationError
-from django.forms import RadioSelect, CheckboxSelectMultiple, FileInput
+from django.forms import RadioSelect, CheckboxSelectMultiple, FileInput, TextInput, Textarea, EmailInput
 from multipage_form.forms import MultipageForm, ChildForm
 from .models import JobApplication
+
+from crispy_forms.helper import FormHelper
 
 from datetime import date
 from django import forms
@@ -33,6 +33,7 @@ class DateSelectorWidget(forms.MultiWidget):
         # DateField expects a single string that it can parse into a date.
         return f'{day}/{month}/{year}'
 
+form_control = {'class': 'form-control'}
 
 class JobApplicationForm(MultipageForm):
     model = JobApplication
@@ -52,8 +53,14 @@ class JobApplicationForm(MultipageForm):
             ('Barbalha', 'Barbalha'),
             ('Miami', 'Miami'),
             ('São Paulo', 'São Paulo'),
-            ]),
-          'data_nascimento': DateSelectorWidget()
+            ], attrs={'class': 'form-group'}),
+
+          'data_nascimento': DateSelectorWidget(attrs={
+            'class': 'form-select',
+            }),
+          'nome_completo': TextInput(attrs=form_control),
+          'email': EmailInput(attrs=form_control),
+          'celular': TextInput(attrs=form_control),
         }
 
     
@@ -103,6 +110,8 @@ class JobApplicationForm(MultipageForm):
         fields = ['ensino_medio_tecnico', 'escola', 'formacao_cursos']
         widgets = {
           'ensino_medio_tecnico': RadioSelect(choices=[(True, "Sim"), (False, "Não")]),
+          'escola': TextInput(attrs=form_control),
+          'formacao_cursos': Textarea(attrs=form_control),
         }
 
 
@@ -192,6 +201,9 @@ class JobApplicationForm(MultipageForm):
 
       class Meta:
         fields = ['nocode_lowcode_tecnologias']
+        widgets = {
+          'nocode_lowcode_tecnologias': TextInput(attrs=form_control),
+        }
     
 
     class Stage8Form(ChildForm):
@@ -309,6 +321,9 @@ class JobApplicationForm(MultipageForm):
       
       class Meta:
         fields = ['qual_duvida']
+        widgets = {
+          'qual_duvida': Textarea(attrs=form_control)
+        }
 
 
     class Stage12Form(ChildForm):
@@ -333,6 +348,9 @@ class JobApplicationForm(MultipageForm):
       
       class Meta:
         fields = ['qual_sugestao']
+        widgets = {
+          'qual_sugestao': Textarea(attrs=form_control)
+        }
 
 
     class Stage13Form(ChildForm):
@@ -357,6 +375,9 @@ class JobApplicationForm(MultipageForm):
 
       class Meta:
         fields = ['quem_indicou']
+        widgets = {
+          'quem_indicou': TextInput(attrs=form_control)
+        }
 
 
     class Stage14Form(ChildForm):
@@ -366,6 +387,9 @@ class JobApplicationForm(MultipageForm):
       
       class Meta:
         fields = ['importancia']
+        widgets = {
+          'importancia': TextInput(attrs=form_control)
+        }
 
 
     class Stage15Form(ChildForm):
@@ -376,7 +400,7 @@ class JobApplicationForm(MultipageForm):
       class Meta:
         fields = ['curriculo']
         widgets = {
-          'curriculo': FileInput()
+          'curriculo': FileInput(attrs=form_control)
         }
 
 
