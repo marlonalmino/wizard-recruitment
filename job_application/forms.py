@@ -54,7 +54,8 @@ class JobApplicationForm(MultipageForm):
             ], attrs={'class': 'form-group'}),
 
           'data_nascimento': DateSelectorWidget(attrs={
-            'class': 'form-select',
+            'class': 'form-select mt-1 inline',
+            'style': 'width:150px'
             }),
           'nome_completo': TextInput(attrs=form_control),
           'email': EmailInput(attrs=form_control),
