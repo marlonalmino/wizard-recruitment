@@ -11,7 +11,8 @@
 </head>
 
 <body>
-  <div class="container mt-4">
+  <div class="container mt-4 pb-2"
+    style="background-image: linear-gradient(#1c2154, #31303a); color: #fff; border: 1px solid black; border-radius: 1rem">
     {% block content %}
     {% if messages %}
     <ul class="messages">
@@ -22,14 +23,14 @@
     {% endif %}
     <div id="main">
       {% block intro %}
-      <div class="intro">
+      <div class="intro" style="margin-top: 1.5%">
         <h3>Obrigado pelo seu interesse na Wizard Recrutamentos. Por favor, forneça as seguintes informações.</h3>
       </div>
       {% endblock %}
       <div class="twocol">
         {% block leftnav %}
         <div class="left rounded-3">
-          <h6>SEÇÕES COMPLETAS</h6>
+          <h6 style="color:black">SEÇÕES COMPLETAS</h6>
           {% get_history as links %}
           {% if links %}
           {% for link in links %}
